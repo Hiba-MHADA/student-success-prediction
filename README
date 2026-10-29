@@ -1,0 +1,92 @@
+$readme = @'
+# Prédiction de la réussite académique des étudiants
+
+Projet de Machine Learning (Groupe 2) visant à prédire le **statut final d'un étudiant** (Diplômé, Abandon, Inscrit) à partir de ses données d'inscription et de ses résultats académiques, avec des algorithmes de **Boosting**. Le projet comprend une étude scientifique complète et une **application web Flask** avec gestion des comptes et historique des prédictions.
+
+## Résultats
+
+- 7 algorithmes comparés (Random Forest, AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost, ...)
+- Meilleur modèle : **LightGBM**, avec environ **83 % de F1-score**
+- 15 variables clés retenues (Random Forest + RFE)
+
+## Pipeline
+
+1. Exploration des données (EDA) et nettoyage
+2. Encodage de la cible et suppression des variables peu utiles
+3. Équilibrage des classes (**SMOTE**) et normalisation
+4. Sélection des 15 variables les plus importantes (**Random Forest + RFE**)
+5. Benchmark des modèles : accuracy, recall, F1-score, matrices de confusion, courbes ROC multiclasses
+6. Application web Flask de prédiction
+
+## Structure du projet
+
+```
+.
+├── code/
+│   ├── 1_Entrainement_et_Performance.ipynb   # EDA, prétraitement, sélection, benchmark
+│   └── 2_Interface_Web.ipynb                 # application Flask (comptes, historique)
+├── data/
+│   └── Predict Student Dropout and Academic Success.csv
+├── outputs/
+│   ├── EDA/                                  # captures de l'analyse exploratoire
+│   ├── GRAPHE/                               # graphiques de performance
+│   └── top 15 features/                      # importance des variables
+├── Rapport/                                  # rapport du projet (PDF)
+├── presentation ppt/                         # présentation (PowerPoint)
+└── requirements.txt
+```
+
+## Jeu de données
+
+**Predict Students' Dropout and Academic Success** (UCI Machine Learning Repository) : environ 4 400 étudiants, variables démographiques, socio-économiques et académiques (unités d'enseignement des 1er et 2e semestres, notes, bourse, frais de scolarité...). Le séparateur du fichier CSV est `;`.
+
+## Installation
+
+```bash
+git clone https://github.com/Hiba-MHADA/student-success-prediction.git
+cd student-success-prediction
+pip install -r requirements.txt
+```
+
+## Utilisation
+
+Les notebooks sont prévus pour être exécutés dans **Google Colab**.
+
+### Étude (entraînement et performance)
+
+1. Ouvrir `code/1_Entrainement_et_Performance.ipynb` dans Google Colab
+2. Uploader le fichier `Predict Student Dropout and Academic Success.csv`
+3. Installer les dépendances : `pip install -r requirements.txt`
+4. Cliquer sur **Tout exécuter** : les graphiques de performance sont générés
+
+### Interface web
+
+1. Ouvrir `code/2_Interface_Web.ipynb` dans Google Colab
+2. Uploader le fichier `Predict Student Dropout and Academic Success.csv`
+3. Installer les dépendances : `pip install -r requirements.txt`
+4. Cliquer sur **Tout exécuter** : un lien de tunnel (proxy) est généré pour accéder à l'application
+
+L'application propose l'inscription et la connexion des utilisateurs (SQLite), la prédiction du statut d'un étudiant avec un modèle Gradient Boosting, et l'historique des prédictions.
+
+## Technologies
+
+Python · pandas · NumPy · scikit-learn · imbalanced-learn (SMOTE) · LightGBM · XGBoost · CatBoost · Matplotlib · Seaborn · Flask · SQLite
+
+## Limites et améliorations possibles
+
+- Les mots de passe de l'interface sont hachés en SHA-256 sans sel, et la clé secrète Flask est écrite en dur dans le notebook : à remplacer (bcrypt/argon2, variable d'environnement) pour un usage réel
+- Séparer le code en scripts Python (`train.py`, `app.py`) au lieu de notebooks
+- Sauvegarder et versionner le modèle entraîné
+- Ajouter des tests et un déploiement (Docker)
+
+## Équipe
+
+- Bassiry Wijdane
+- Moujoud Aya
+- Grandi Soukaina
+- Tace Mouad
+- Mhaida Hiba
+
+Dépôt maintenu par [Hiba-MHADA](https://github.com/Hiba-MHADA).
+'@
+[System.IO.File]::WriteAllText("$PWD\README.md", $readme, (New-Object System.Text.UTF8Encoding($false)))

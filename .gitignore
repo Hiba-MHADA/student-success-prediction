@@ -1,0 +1,16 @@
+$gitignore = @'
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+.venv/
+venv/
+.DS_Store
+.idea/
+.vscode/
+application_data.db
+*.pkl
+Student_Data_Cleaned2.csv
+Student_Data_Selected_Features.csv
+'@
+[System.IO.File]::WriteAllText("$PWD\.gitignore", $gitignore, (New-Object System.Text.UTF8Encoding($false)))
